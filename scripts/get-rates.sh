@@ -132,11 +132,12 @@ echo ""
 # Calculate gap
 echo "📈 BRECHA CAMBIARIA:"
 echo "===================="
-GAP=$(echo "scale=2; ($P2P_AVG - $BCV_RATE) / $BCV_RATE * 100" | bc)
 DIFF=$(echo "scale=2; $P2P_AVG - $BCV_RATE" | bc)
+# Brecha: cuánto % le falta al BCV para alcanzar al P2P (referencia 100% = P2P)
+GAP=$(echo "scale=2; ($P2P_AVG - $BCV_RATE) / $P2P_AVG * 100" | bc)
 
 echo "Diferencia: $DIFF Bs"
-echo "Brecha: $GAP%"
+echo "Brecha: $GAP% (BCV está $GAP% debajo del paralelo)"
 echo ""
 echo "=============================="
 echo "Actualizado: $(date '+%Y-%m-%d %H:%M')"
