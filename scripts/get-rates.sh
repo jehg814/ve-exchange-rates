@@ -6,16 +6,22 @@ echo "🇻🇪 TASAS DE CAMBIO VENEZUELA"
 echo "=============================="
 echo ""
 
-# Get BCV rate from tcambio.app
+# Get BCV rate from dolarapi.com (most reliable)
 echo "📊 Consultando tasa BCV..."
-BCV_RATE=$(curl -s "https://tcambio.app" 2>/dev/null | grep -oP 'Bs\.S\s+\K[0-9]+\.[0-9]+' | head -1)
+BCV_RATE=$(curl -s "https://ve.dolarapi.com/v1/dolares/oficial" 2>/dev/null | jq -r '.promedio // empty')
 
-if [ -z "$BCV_RATE" ]; then
+# Fallback to other sources if API fails
+if [ -z "$BCV_RATE" ] || [ "$BCV_RATE" = "null" ]; then
+    BCV_RATE=$(curl -s "https://tcambio.app" 2>/dev/null | grep -oP 'Bs\.S\s+\K[0-9]+\.[0-9]+' | head -1)
+fi
+
+if [ -z "$BCV_RATE" ] || [ "$BCV_RATE" = "null" ]; then
     BCV_RATE=$(curl -s "https://finanzasdigital.com" 2>/dev/null | grep -oP '[0-9]+\.[0-9]+(?=\s*Bs/USD)' | head -1)
 fi
 
-if [ -z "$BCV_RATE" ]; then
-    BCV_RATE="363.66"
+# Last resort fallback
+if [ -z "$BCV_RATE" ] || [ "$BCV_RATE" = "null" ]; then
+    BCV_RATE="370.25"
 fi
 
 echo "✅ Tasa BCV: $BCV_RATE Bs/USD"
