@@ -141,11 +141,11 @@ echo ""
 echo "📈 BRECHA CAMBIARIA:"
 echo "===================="
 DIFF=$(echo "scale=2; $P2P_AVG - $BCV_RATE" | bc)
-# Brecha: cuánto % le falta al BCV para alcanzar al P2P (referencia 100% = P2P)
-GAP=$(echo "scale=2; ($P2P_AVG - $BCV_RATE) / $P2P_AVG * 100" | bc)
+# Brecha: cuánto % está el paralelo por encima del oficial (referencia 100% = BCV)
+GAP=$(echo "scale=2; ($P2P_AVG - $BCV_RATE) / $BCV_RATE * 100" | bc)
 
 echo "Diferencia: $DIFF Bs"
-echo "Brecha: $GAP% (BCV está $GAP% debajo del paralelo)"
+echo "Brecha: $GAP% (el paralelo está $GAP% encima del oficial)"
 echo ""
 echo "=============================="
 echo "Actualizado: $(date '+%Y-%m-%d %H:%M')"
