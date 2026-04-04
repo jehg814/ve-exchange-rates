@@ -12,10 +12,16 @@ Get current exchange rates for Venezuela:
 
 ## Usage
 
-Run the script to get current rates:
+Run the wrapper script to get current rates:
 
 ```bash
 ./skills/ve-exchange-rates/scripts/get-rates.sh
+```
+
+The shell script is now a thin wrapper around a Python implementation:
+
+```bash
+python3 ./skills/ve-exchange-rates/scripts/get_rates.py
 ```
 
 ## Output
@@ -41,5 +47,7 @@ The script returns:
 - BCV is the primary source and should be treated as the authoritative rate
 - The skill warns when the BCV "Fecha Valor" does not match today or tomorrow
 - P2P rates fluctuate constantly based on market conditions
-- Script uses `curl`, `jq`, `grep`, `sed`, and `bc`
+- Main implementation now lives in Python for readability and easier auditing
+- The shell entrypoint is only a thin wrapper that invokes `get_rates.py`
+- The implementation uses standard library HTTP requests and `bc` for decimal math formatting compatibility
 - If BCV is temporarily unavailable, the skill falls back to a secondary source to preserve functionality
