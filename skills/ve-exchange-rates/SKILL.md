@@ -34,6 +34,25 @@ The script returns:
 - Binance P2P USDT rates (buy/sell/average)
 - Gap percentage between BCV and P2P
 - Example conversion from 100 USD at BCV rate into USDT at P2P rate
+- USDT lost because of the exchange-rate gap
+
+## Response format guidance
+
+When using this skill for a user-facing reply, prefer returning the complete summary instead of only one metric.
+
+Default response should include:
+- **BCV**
+- **USDT Binance P2P**
+- **Brecha**
+- **100 USD BCV = X USDT**
+- **Pérdida por brecha**
+
+If available, also include:
+- **Fuente BCV**
+- **Fecha Valor BCV**
+- warning when the BCV date does not match the current expected run window
+
+Only shorten the response if the user explicitly asks for a single field.
 
 ## Data Sources
 
