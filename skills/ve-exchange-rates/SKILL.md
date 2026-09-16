@@ -61,6 +61,8 @@ Only shorten the response if the user explicitly asks for a single field.
 - **Fallback for BCV**: exchangerate-api.com only if BCV cannot be parsed
 - **USDT P2P**: Binance P2P API (`p2p.binance.com`)
 
+If neither BCV nor the fallback source returns a rate, the skill reports the failure and exits without computing any rates. It never invents or hardcodes a value.
+
 ## Notes
 
 - BCV is the primary source and should be treated as the authoritative rate
@@ -68,5 +70,5 @@ Only shorten the response if the user explicitly asks for a single field.
 - P2P rates fluctuate constantly based on market conditions
 - Main implementation now lives in Python for readability and easier auditing
 - The shell entrypoint is only a thin wrapper that invokes `get_rates.py`
-- The implementation uses standard library HTTP requests and `bc` for decimal math formatting compatibility
-- If BCV is temporarily unavailable, the skill falls back to a secondary source to preserve functionality
+- The implementation uses only the Python standard library (`urllib` for HTTP, `decimal` for math) — no external commands or dependencies
+- If BCV is temporarily unavailable, the skill tries a secondary source; if that also fails it reports the error and does not report a rate
