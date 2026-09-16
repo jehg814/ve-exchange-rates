@@ -120,19 +120,12 @@ def main() -> int:
     print("📊 Consultando USDT Binance P2P...")
     try:
         buy_avg, buy_min, buy_max, buy_count = fetch_binance_side("SELL")
-    except Exception:
-        buy_avg = bcv_rate * d("1.45")
-        buy_min = bcv_rate * d("1.42")
-        buy_max = bcv_rate * d("1.48")
-        buy_count = "0 (estimado)"
-
-    try:
         sell_avg, sell_min, sell_max, sell_count = fetch_binance_side("BUY")
     except Exception:
-        sell_avg = bcv_rate * d("1.46")
-        sell_min = bcv_rate * d("1.43")
-        sell_max = bcv_rate * d("1.49")
-        sell_count = "0 (estimado)"
+        print("❌ No se pudo obtener el precio USDT desde Binance P2P.")
+        print("   No se calculará la brecha para evitar reportar valores inventados.")
+        print("   Intenta de nuevo más tarde o verifica el acceso a internet.")
+        return 1
 
     p2p_avg = q2((buy_avg + sell_avg) / d(2))
 

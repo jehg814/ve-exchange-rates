@@ -61,7 +61,7 @@ Only shorten the response if the user explicitly asks for a single field.
 - **Fallback for BCV**: exchangerate-api.com only if BCV cannot be parsed
 - **USDT P2P**: Binance P2P API (`p2p.binance.com`)
 
-If neither BCV nor the fallback source returns a rate, the skill reports the failure and exits without computing any rates. It never invents or hardcodes a value.
+If neither BCV nor the fallback source returns a rate, or if the Binance P2P price cannot be fetched, the skill reports the failure and exits without computing any rates. It never invents, estimates, or hardcodes a value.
 
 ## Notes
 
